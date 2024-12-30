@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h3>Listes des auteurs</h3>
+        <a href="{{url('app_ajouter_author')}}"><button type="button" class="btn rounded-pill btn-primary">Ajouter</button></a>
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Numero</th>
+                    <th>Nom</th>
+                    <th>Nationalité</th>
+                    <th>Date de naissance</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for author in authors %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{author.name}}</td>
+                        <td>{{author.nationality}}</td>
+                        <td>{{author.birthDate}}</td>
+                        <td>
+                            <a class="btn rounded-pill btn-warning" href="{{url('app_modifier_author', {'id':author.id})}}">Modifier</a>
+                            <a class="btn rounded-pill btn-danger" data-bs-toggle="modal" data-bs-target="#myModal">Supprimer</a>
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Suppression d'un auteur</h4>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            Cette action est irréversible !
+                                            Voulez-vous supprimer cet auteur ?
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <a class="btn rounded-pill btn-danger" href="{{url('app_supprimer_author', {'id':author.id})}}">Confirmez</a>
+                                            <a class="btn btn-secondary" data-bs-dismiss="modal">Annuler</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
